@@ -9,14 +9,15 @@ const navLinkSelector = 'a.nav-link';
 const bodySelector = 'body';
 
 const productDetailTestId = 'product_description';
-
 const catalogListTestId = 'catalog_list';
 const linkListTestId = 'navbar_linksContainer';
-const addToCartBtnSelector = 'button.ProductDetails-AddToCart'
-const cardBadgeSelector = 'span.CartBadge'
+const addToCartBtnSelector = 'button.ProductDetails-AddToCart';
+const cardBadgeSelector = 'span.CartBadge';
 
-const cartAmountSelector ='td.Cart-Count'
-const cartTableSelector = 'table.Cart-Table'
+const cartAmountSelector ='td.Cart-Count';
+const cartTableSelector = 'table.Cart-Table';
+const cartClearBtnSelector = 'button.Cart-Clear';
+
 module.exports = {
   burgerBtnSelector,
   navMenuSelector,
@@ -31,5 +32,6 @@ module.exports = {
   addToCartBtnSelector,
   cardBadgeSelector,
   cartAmountSelector,
-  cartTableSelector
+  cartTableSelector,
+  cartClearBtnSelector
 };
