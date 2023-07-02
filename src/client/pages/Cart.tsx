@@ -110,7 +110,7 @@ export const Cart: React.FC = () => {
             <Helmet title="Shopping cart" />
             <div className="row mb-4">
                 <div className="col">
-                    <h1>Shopping cart</h1>
+                    <h1 data-testid="cart_header">Shopping cart</h1>
                     {orderInfo}
                     {content}
                 </div>

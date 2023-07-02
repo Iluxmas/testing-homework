@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { combineEpics, createEpicMiddleware, ofType, StateObservable } from 'redux-observable';
 import { EMPTY, from, map, mapTo, mergeMap, mergeMapTo, Observable, tap } from 'rxjs';
 import { produce } from 'immer';
@@ -145,7 +145,10 @@ export function initStore(api: ExampleApi, cart: CartApi) {
         dependencies: { api, cart }
     });
 
-    const store = createStore(rootReducer, applyMiddleware(epicMiddleware));
+    const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const store = createStore(rootReducer, composeEnhancers(applyMiddleware(epicMiddleware)));
+
+    // const store = createStore(rootReducer, applyMiddleware(epicMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
     epicMiddleware.run(rootEpic);
 
