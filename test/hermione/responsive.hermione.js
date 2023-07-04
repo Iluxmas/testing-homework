@@ -6,29 +6,32 @@ const { navMenuSelector, burgerBtnSelector, bodySelector, baseUrl } = require('.
 
 describe('\n🟨 Should match screenshot at different resolutions', async function () {
 
+  const bug_id = process.env.BUG_ID;
+  const bugQuery = bug_id ? `?bug_id=${bug_id}` : '';
+
   it(`test at 1920px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(1920, 1080);
 
     await this.browser.assertView('plain', 'body');
   });
 
   it(`test at 1024px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(1024, 900);
 
     await this.browser.assertView('plain', 'body');
   });
 
   it(`test at 768px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(768, 1024);
 
     await this.browser.assertView('plain', 'body');
   });
 
   it(`test at 320px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(320, 768);
 
     await this.browser.assertView('plain', 'body', {compositeImage: true, screenshotDelay: 1000});
@@ -37,8 +40,11 @@ describe('\n🟨 Should match screenshot at different resolutions', async functi
 
 describe('\n🟨 Should not be scroll X axis', async function () {
 
+  const bug_id = process.env.BUG_ID;
+  const bugQuery = bug_id ? `?bug_id=${bug_id}` : '';
+
   it(`test at 1920px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(1920, 1080);
 
     const body = await this.browser.$(bodySelector);
@@ -49,7 +55,7 @@ describe('\n🟨 Should not be scroll X axis', async function () {
   });
 
   it(`test at 1024px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(1024, 900);
 
     const body = await this.browser.$(bodySelector);
@@ -60,7 +66,7 @@ describe('\n🟨 Should not be scroll X axis', async function () {
   });
 
   it(`test at 768px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(768, 1024);
 
     const body = await this.browser.$(bodySelector);
@@ -71,7 +77,7 @@ describe('\n🟨 Should not be scroll X axis', async function () {
   });
 
   it(`test at 320px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(320, 768);
 
     const body = await this.browser.$(bodySelector);
@@ -84,8 +90,11 @@ describe('\n🟨 Should not be scroll X axis', async function () {
 
 describe('\n🟨 Should have burger menu on small res', async function () {
 
+  const bug_id = process.env.BUG_ID;
+  const bugQuery = bug_id ? `?bug_id=${bug_id}` : '';
+
   it(`Appears at <576px, not at >=576px`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(576, 1080);
 
     const burgerBtn = await this.browser.$(burgerBtnSelector);
@@ -96,7 +105,7 @@ describe('\n🟨 Should have burger menu on small res', async function () {
   });
 
   it(`Menu appears on burger click`, async function () {
-    await this.browser.url(baseUrl);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(575, 1080);
 
     const burgerBtn = await this.browser.$(burgerBtnSelector);
@@ -108,7 +117,7 @@ describe('\n🟨 Should have burger menu on small res', async function () {
   });
 
   it(`Menu should close on link click`, async function () {
-    await this.browser.url(`${baseUrl}`);
+    await this.browser.url(`${`${baseUrl}${bugQuery}`}`);
     await this.browser.setWindowSize(575, 1080);
 
     const burgerBtn = await this.browser.$(burgerBtnSelector);
@@ -123,7 +132,7 @@ describe('\n🟨 Should have burger menu on small res', async function () {
   });
 
   it(`Menu should have collapsed class after item click`, async function () {
-    await this.browser.url(`${baseUrl}`);
+    await this.browser.url(`${baseUrl}${bugQuery}`);
     await this.browser.setWindowSize(575, 1080);
 
     const burgerBtn = await this.browser.$(burgerBtnSelector);
@@ -138,10 +147,5 @@ describe('\n🟨 Should have burger menu on small res', async function () {
 
     expect(navLinkClassList.includes('collapse')).toBe(true)
   });
-  // it(`test at 320px`, async function () {
-  //   await this.browser.url(baseUrl);
-  //   await this.browser.setWindowSize(320, 768);
 
-  //   await this.browser.assertView('plain', 'body', {compositeImage: true, screenshotDelay: 1000});
-  // });
 });

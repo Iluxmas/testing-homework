@@ -13,6 +13,17 @@ const catalogListTestId = 'catalog_list';
 const linkListTestId = 'navbar_linksContainer';
 const addToCartBtnSelector = 'button.ProductDetails-AddToCart';
 const cardBadgeSelector = 'span.CartBadge';
+const cartBadgeTestId = 'cartBadge';
+
+const addressInputTestid= 'addressInput'
+const nameInputTestId = 'nameInput'
+const phoneInputTestId = 'phoneInput'
+const submitButtonTestId = 'submitBtn'
+const orderMessageTestId = 'order-success'
+
+const nameErrTestId = 'nameError'
+const phoneErrTestId = 'phoneError'
+const addressErrTestId = 'addressError'
 
 const cartAmountSelector ='td.Cart-Count';
 const cartTableSelector = 'table.Cart-Table';
@@ -33,5 +44,14 @@ module.exports = {
   cardBadgeSelector,
   cartAmountSelector,
   cartTableSelector,
-  cartClearBtnSelector
+  cartClearBtnSelector,
+  cartBadgeTestId,
+  nameInputTestId,
+  phoneInputTestId,
+  addressInputTestid,
+  submitButtonTestId,
+  orderMessageTestId,
+  nameErrTestId,
+  phoneErrTestId,
+  addressErrTestId
 };

@@ -7,11 +7,14 @@ const { baseUrl, addToCartBtnSelector } = require('../constants');
 describe('⬛ Add to cart button should match design', async function () {
   const randomId = Math.floor(Math.random() * 27);
 
+  const bug_id = process.env.BUG_ID;
+  const bugQuery = bug_id ? `?bug_id=${bug_id}` : '';
+
   it('Have correct class', async ({ browser }) => {
     const puppeteer = await browser.getPuppeteer();
     const [page] = await puppeteer.pages();
 
-    await page.goto(`${baseUrl}/catalog/${randomId}`, {"waitUntil": "domcontentloaded"});
+    await page.goto(`${baseUrl}/catalog/${randomId}${bugQuery}`, {"waitUntil": "domcontentloaded"});
 
     await page.waitForSelector(addToCartBtnSelector, { timeout: 2000 });
     const addBtn = await page.$(addToCartBtnSelector);
@@ -21,7 +24,7 @@ describe('⬛ Add to cart button should match design', async function () {
   });
 
   it(`Should match screenshot`, async function () {
-    await this.browser.url(`${baseUrl}/catalog/${randomId}`);
+    await this.browser.url(`${baseUrl}/catalog/${randomId}${bugQuery}`);
 
     await this.browser.assertView('plain', addToCartBtnSelector);
   });

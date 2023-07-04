@@ -3,7 +3,11 @@ const puppeteer = require('puppeteer');
 const { baseUrl, addToCartBtnSelector, cartTableSelector, cartClearBtnSelector } = require('../constants');
 
 describe('⬜ Cart should', async function () {
+  const bug_id = process.env.BUG_ID;
+  const bugQuery = bug_id ? `?bug_id=${bug_id}` : '';
+
   afterEach(async ({ browser }) => {
+
     const puppeteer = await browser.getPuppeteer();
     const [page] = await puppeteer.pages();
 
@@ -22,14 +26,14 @@ describe('⬜ Cart should', async function () {
     const puppeteer = await browser.getPuppeteer();
     const [page] = await puppeteer.pages();
 
-    await page.goto(`${baseUrl}/catalog/${randomId}`, {"waitUntil": "domcontentloaded"});
+    await page.goto(`${baseUrl}/catalog/${randomId}${bugQuery}`, {"waitUntil": "domcontentloaded"});
     await page.waitForSelector(addToCartBtnSelector, { timeout: 2000 });
     const addBtn = await page.$(addToCartBtnSelector);
 
     await addBtn.click();
     await page.waitForTimeout(1000);
 
-    await page.goto(`${baseUrl}/cart`, {"waitUntil": "domcontentloaded"});
+    await page.goto(`${baseUrl}/cart${bugQuery}`, {"waitUntil": "domcontentloaded"});
 
     await page.waitForSelector(cartTableSelector, { timeout: 2000 });
     const productsList = await page.$(cartTableSelector);
