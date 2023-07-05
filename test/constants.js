@@ -20,7 +20,7 @@ const nameInputTestId = 'nameInput'
 const phoneInputTestId = 'phoneInput'
 const submitButtonTestId = 'submitBtn'
 const orderMessageTestId = 'order-success'
-
+const orderSpanTestId = 'order-success-span'
 const nameErrTestId = 'nameError'
 const phoneErrTestId = 'phoneError'
 const addressErrTestId = 'addressError'
@@ -53,5 +53,6 @@ module.exports = {
   orderMessageTestId,
   nameErrTestId,
   phoneErrTestId,
-  addressErrTestId
+  addressErrTestId,
+  orderSpanTestId
 };

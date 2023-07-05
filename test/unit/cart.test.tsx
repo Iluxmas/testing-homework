@@ -3,7 +3,7 @@ import { it } from '@jest/globals';
 import React from 'react';
 import axios from 'axios';
 import event from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Application } from '../../src/client/Application';
@@ -22,6 +22,7 @@ import {
   nameErrTestId,
   phoneErrTestId,
   addressErrTestId,
+  orderSpanTestId,
 } from '../constants';
 
 jest.mock('axios');
@@ -56,9 +57,11 @@ describe('\n🟫 should have Badge if product was added', function () {
   });
 });
 
-describe('\n Cart should save data', function () {
+describe('\n🟫 Cart should save data', function () {
   beforeEach(() => {
     axios.get.mockResolvedValue({ data: mockProducts });
+    delete window.location;
+    window.location = { reload: jest.fn() };
   });
 
   const randomId = Math.floor(Math.random() * mockProducts.length);
@@ -87,7 +90,7 @@ describe('\n Cart should save data', function () {
   });
 });
 
-describe('\n Cart form should be valid', function () {
+describe('\n🟫 Cart form should be valid', function () {
   beforeEach(() => {
     localStorage.clear();
     axios.post.mockResolvedValue({ data: { id: 1 } });
@@ -155,5 +158,36 @@ describe('\n Cart form should be valid', function () {
     expect(getByTestId(nameInputTestId)).not.toBeNull();
     expect(getByTestId(phoneErrTestId)).not.toBeNull();
     expect(getByTestId(addressErrTestId)).not.toBeNull();
+  });
+});
+
+describe('\n🟫 Cart should ', function () {
+  beforeEach(() => {
+    axios.get.mockResolvedValue({ data: mockProducts });
+    axios.post.mockResolvedValue({ data: { id: 1 } });
+  });
+
+  it('Place order', async function () {
+    const store = initStore(MockApiInstance, new CartApi());
+
+    const application = (
+      <MemoryRouter initialEntries={[`/cart`]}>
+        <Provider store={store}>
+          <Application />
+        </Provider>
+      </MemoryRouter>
+    );
+
+    store.dispatch({
+      type: 'CHECKOUT',
+      form: { name: 'TestName', phone: '7777777777', address: 'TestAddress' },
+      cart: { 1: { name: mockProducts[1].name, count: 1, price: mockProducts[1].name.price } },
+    });
+
+    const { getByTestId } = render(application);
+
+    const message = await waitFor(() => getByTestId(orderSpanTestId));
+    console.log(message);
+    expect(message.textContent).toBe('Order #1 has been successfully completed.');
   });
 });
